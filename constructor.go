@@ -1,6 +1,8 @@
 package gopinba
 
 import (
+	"fmt"
+	"net"
 	"os"
 )
 
@@ -34,8 +36,13 @@ func New(options *Options) *Pinba {
 	pinba := &Pinba{
 		hostname:   hostname,
 		serverName: serverName,
-		pinbaHost:  pinbaHost,
-		pinbaPort:  pinbaPort,
+		connected:  false,
+	}
+
+	if connect, err := net.Dial("udp", fmt.Sprintf("%s:%d", pinbaHost, pinbaPort)); err == nil {
+
+		pinba.connect = connect
+		pinba.connected = true
 	}
 
 	return pinba

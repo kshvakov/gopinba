@@ -1,18 +1,15 @@
 package gopinba
 
 import (
-	//"fmt"
-	"runtime"
 	"time"
 )
 
-var memStats runtime.MemStats
-
 type request struct {
-	timeStart  time.Time
-	schema     string
-	scriptName string
-	timers     []*timer
+	timeStart   time.Time
+	memoryUsage uint64
+	schema      string
+	scriptName  string
+	timers      []*timer
 }
 
 func (request *request) SetSchema(schema string) {
@@ -27,13 +24,10 @@ func (request *request) SetScriptName(scriptName string) {
 
 func (request *request) TimerStart(tags *Tags) *timer {
 
-	runtime.ReadMemStats(&memStats)
-
 	timer := &timer{
-		started:     true,
-		timeStart:   time.Now(),
-		tags:        tags,
-		memoryUsage: memStats.TotalAlloc,
+		started:   true,
+		timeStart: time.Now(),
+		tags:      tags,
 	}
 
 	request.timers = append(request.timers, timer)
@@ -43,9 +37,6 @@ func (request *request) TimerStart(tags *Tags) *timer {
 
 func (request *request) TimerStop(timer *timer) {
 
-	runtime.ReadMemStats(&memStats)
-
 	timer.started = false
 	timer.timeEnd = time.Now()
-	timer.memoryUsage = memStats.TotalAlloc - timer.memoryUsage
 }

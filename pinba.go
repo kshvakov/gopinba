@@ -5,35 +5,44 @@ import (
 	"fmt"
 	ProtoMessage "github.com/kshvakov/gopinba/Pinba"
 	"net"
+	"os"
+	"runtime"
 	"time"
 )
 
 type Pinba struct {
-	pinbaHost  string
-	pinbaPort  int
 	hostname   string
 	serverName string
+	connect    net.Conn
+	connected  bool
 }
 
 func (pinba *Pinba) Request() *request {
 
+	var memStats runtime.MemStats
+
+	runtime.ReadMemStats(&memStats)
+
 	request := &request{
-		timeStart:  time.Now(),
-		scriptName: "unknown",
-		//timers:     make([]*timer, 0, 10),
+		timeStart:   time.Now(),
+		scriptName:  os.Args[0],
+		memoryUsage: memStats.TotalAlloc,
+		timers:      make([]*timer, 0, 10),
 	}
 
 	return request
 }
 
 func (pinba *Pinba) Flush(request *request) error {
-	// @todo: не открывать коннект каждый раз
-	conn, err := net.Dial("udp", fmt.Sprintf("%s:%d", pinba.pinbaHost, pinba.pinbaPort))
 
-	if err != nil {
+	if !pinba.connected {
 
-		return err
+		return fmt.Errorf("Could not connect to pinba server")
 	}
+
+	var memStats runtime.MemStats
+
+	runtime.ReadMemStats(&memStats)
 
 	req := ProtoMessage.Request{
 		Hostname:     proto.String(pinba.hostname),
@@ -41,7 +50,7 @@ func (pinba *Pinba) Flush(request *request) error {
 		ScriptName:   proto.String(request.scriptName),
 		RequestCount: proto.Uint32(1),
 		DocumentSize: proto.Uint32(0),
-		MemoryPeak:   proto.Uint32(0),
+		MemoryPeak:   proto.Uint32(uint32(memStats.TotalAlloc - request.memoryUsage)),
 		RequestTime:  proto.Float32(float32(time.Since(request.timeStart).Seconds())),
 		RuUtime:      proto.Float32(0),
 		RuStime:      proto.Float32(0),
@@ -88,7 +97,7 @@ func (pinba *Pinba) Flush(request *request) error {
 		return err
 	}
 
-	if _, err = conn.Write(message); err != nil {
+	if _, err = pinba.connect.Write(message); err != nil {
 
 		return err
 	}

@@ -23,7 +23,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		request.TimerStop(timer)
 	}
 
-	pinba.Flush(request)
+	go pinba.Flush(request)
 
 	fmt.Fprint(w, "handler")
 }

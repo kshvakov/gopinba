@@ -36,5 +36,7 @@ func BenchmarkPinba(b *testing.B) {
 
 			request.TimerStop(tmr)
 		}
+
+		pinba.Flush(request)
 	}
 }

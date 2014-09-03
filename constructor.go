@@ -16,19 +16,19 @@ func New(options *Options) *pinba {
 		hostname = value
 	}
 
-	if options.serverName != "" {
+	if options.ServerName != "" {
 
-		serverName = options.serverName
+		serverName = options.ServerName
 	}
 
-	if options.pinbaHost != "" {
+	if options.PinbaHost != "" {
 
-		pinbaHost = options.pinbaHost
+		pinbaHost = options.PinbaHost
 	}
 
-	if options.pinbaPort != 0 {
+	if options.PinbaPort != 0 {
 
-		pinbaPort = options.pinbaPort
+		pinbaPort = options.PinbaPort
 	}
 
 	pinba := &pinba{

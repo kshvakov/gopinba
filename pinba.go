@@ -45,6 +45,7 @@ func (pinba *pinba) Flush(request *request) error {
 		RequestTime:  proto.Float32(float32(time.Since(request.timeStart).Seconds())),
 		RuUtime:      proto.Float32(0),
 		RuStime:      proto.Float32(0),
+		Schema:       proto.String(request.schema),
 		Dictionary:   make([]string, 0),
 	}
 

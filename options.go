@@ -1,7 +1,7 @@
 package gopinba
 
 type Options struct {
-	pinbaHost  string
-	pinbaPort  int
-	serverName string
+	PinbaHost  string
+	PinbaPort  int
+	ServerName string
 }

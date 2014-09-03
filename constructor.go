@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-func New(options *Options) *pinba {
+func New(options *Options) *Pinba {
 
 	hostname := "unknown"
 	serverName := "unknown"
@@ -31,7 +31,7 @@ func New(options *Options) *pinba {
 		pinbaPort = options.PinbaPort
 	}
 
-	pinba := &pinba{
+	pinba := &Pinba{
 		hostname:   hostname,
 		serverName: serverName,
 		pinbaHost:  pinbaHost,

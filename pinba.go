@@ -3,19 +3,19 @@ package gopinba
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"fmt"
-	"github.com/kshvakov/gopinba/Pinba"
+	ProtoMessage "github.com/kshvakov/gopinba/Pinba"
 	"net"
 	"time"
 )
 
-type pinba struct {
+type Pinba struct {
 	pinbaHost  string
 	pinbaPort  int
 	hostname   string
 	serverName string
 }
 
-func (pinba *pinba) Request() *request {
+func (pinba *Pinba) Request() *request {
 
 	request := &request{
 		timeStart:  time.Now(),
@@ -26,7 +26,7 @@ func (pinba *pinba) Request() *request {
 	return request
 }
 
-func (pinba *pinba) Flush(request *request) error {
+func (pinba *Pinba) Flush(request *request) error {
 	// @todo: не открывать коннект каждый раз
 	conn, err := net.Dial("udp", fmt.Sprintf("%s:%d", pinba.pinbaHost, pinba.pinbaPort))
 
@@ -35,7 +35,7 @@ func (pinba *pinba) Flush(request *request) error {
 		return err
 	}
 
-	req := Pinba.Request{
+	req := ProtoMessage.Request{
 		Hostname:     proto.String(pinba.hostname),
 		ServerName:   proto.String(pinba.serverName),
 		ScriptName:   proto.String(request.scriptName),

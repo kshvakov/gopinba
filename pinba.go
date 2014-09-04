@@ -45,17 +45,20 @@ func (pinba *Pinba) Flush(request *request) error {
 	runtime.ReadMemStats(&memStats)
 
 	req := ProtoMessage.Request{
-		Hostname:     proto.String(pinba.hostname),
-		ServerName:   proto.String(pinba.serverName),
-		ScriptName:   proto.String(request.scriptName),
-		RequestCount: proto.Uint32(1),
-		DocumentSize: proto.Uint32(0),
-		MemoryPeak:   proto.Uint32(uint32(memStats.TotalAlloc - request.memoryUsage)),
-		RequestTime:  proto.Float32(float32(time.Since(request.timeStart).Seconds())),
-		RuUtime:      proto.Float32(0),
-		RuStime:      proto.Float32(0),
-		Schema:       proto.String(request.schema),
-		Dictionary:   make([]string, 0),
+		Hostname:        proto.String(pinba.hostname),
+		ServerName:      proto.String(pinba.serverName),
+		ScriptName:      proto.String(request.scriptName),
+		RequestCount:    proto.Uint32(1),
+		DocumentSize:    proto.Uint32(0),
+		MemoryPeak:      proto.Uint32(0),
+		MemoryFootprint: proto.Uint32(uint32(memStats.TotalAlloc - request.memoryUsage)),
+		RequestTime:     proto.Float32(float32(time.Since(request.timeStart).Seconds())),
+		RuUtime:         proto.Float32(0),
+		RuStime:         proto.Float32(0),
+		Schema:          proto.String(request.schema),
+		Dictionary:      make([]string, 0, 20),
+		TimerTagName:    make([]uint32, 0, 20),
+		TimerTagValue:   make([]uint32, 0, 20),
 	}
 
 	for _, timer := range request.timers {

@@ -1,4 +1,4 @@
-gopinba
+gopinbasdfsdfsd (https://travis-ci.org/kshvakov/gopinba.svg?branch=master)](https://travis-ci.org/kshvakov/gopinba)
 =======
 
 Клиент на [Go](http://golang.org) для  [Pinba](http://pinba.org/)

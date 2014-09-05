@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Pinba access object
 type Pinba struct {
 	hostname   string
 	serverName string
@@ -17,6 +18,7 @@ type Pinba struct {
 	connected  bool
 }
 
+// New Pinba request object
 func (pinba *Pinba) Request() *request {
 
 	var memStats runtime.MemStats
@@ -33,6 +35,7 @@ func (pinba *Pinba) Request() *request {
 	return request
 }
 
+// Flush request and send data to Pinba server
 func (pinba *Pinba) Flush(request *request) error {
 
 	if !pinba.connected {

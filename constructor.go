@@ -6,6 +6,12 @@ import (
 	"os"
 )
 
+// New Pinba access object
+//
+// Example
+//
+//  pinba := gopinba.New(&gopinba.Options{PinbaHost: "127.0.0.1", PinbaPort: 30002})
+//
 func New(options *Options) *Pinba {
 
 	hostname := "unknown"

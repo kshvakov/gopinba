@@ -1,4 +1,5 @@
-gopinba [![Build Status](https://travis-ci.org/kshvakov/gopinba.svg?branch=master)](https://travis-ci.org/kshvakov/gopinba)
+gopinba [![Build Status](https://travis-ci.org/kshvakov/gopinba.svg?branch=master)](https://travis-ci.org/kshvakov/gopinba) [![GoDoc](https://godoc.org/github.com/kshvakov/gopinba?status.svg)](https://godoc.org/github.com/kshvakov/gopinba/)
+
 =======
 
 Клиент на [Go](http://golang.org) для  [Pinba](http://pinba.org/)

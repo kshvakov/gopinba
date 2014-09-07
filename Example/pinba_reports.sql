@@ -54,7 +54,7 @@ create table report_by_group_script_host (
 ) engine=pinba default charset=latin1 comment='tag_report2:group';
 
 
-CREATE TABLE report_by_group_operation_from_to (
+create table report_by_group_operation_from_to (
    script_name varchar(128) default null,
    group_value varchar(64) default null,
    operation_value varchar(64) default null,

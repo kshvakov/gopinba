@@ -47,7 +47,22 @@
 //
 //  var pinba *gopinba.Pinba
 //
-//  func handler(w http.ResponseWriter, r *http.Request) {
+//  func simpleRequest(w http.ResponseWriter, r *http.Request) {
+//
+//    request := pinba.Request()
+//
+//    request.SetScriptName(r.URL.Path)
+//
+//    // exec
+//
+//    request.TimerStop(timer)
+//
+//    go pinba.Flush(request)
+//
+//    fmt.Fprintf(w, "simpleRequest %s", r.URL.Path)
+//  }
+//
+//  func requestWithTimers(w http.ResponseWriter, r *http.Request) {
 //
 //    request := pinba.Request()
 //
@@ -80,21 +95,52 @@
 //        "operation": "fetch_data",
 //    })
 //
-//    // fetch
+//    // exec
 //
 //    request.TimerStop(timer)
 //
 //    go pinba.Flush(request)
 //
-//    fmt.Fprint(w, "handler")
+//    fmt.Fprintf(w, "requestWithTimers %s", r.URL.Path)
 //  }
 //
 //  func main() {
 //
 //    pinba = gopinba.New(&gopinba.Options{PinbaHost: "127.0.0.2", PinbaPort: 30002, ServerName: "go-web.local"})
 //
-//    http.HandleFunc("/", handler)
+//    http.HandleFunc("/", simpleRequest)
+//    http.HandleFunc("/timers/", requestWithTimers)
 //    http.ListenAndServe(":8080", nil)
 //  }
+//
+// Pinba reports tables
+//
+//  create table report_by_group_operation (
+//    group_value varchar(64) default null,
+//    operation_value varchar(64) default null,
+//    req_count int(11) default null,
+//    req_per_sec float default null,
+//    hit_count int(11) default null,
+//    hit_per_sec float default null,
+//    timer_value float default null,
+//    timer_median float default null,
+//    index_value varchar(256) default null
+//  ) engine=pinba default charset=latin1 comment='tag2_info:group,operation';
+//
+//  create table report_by_group_operation_from_to (
+//    script_name varchar(128) default null,
+//    group_value varchar(64) default null,
+//    operation_value varchar(64) default null,
+//    from_server_value varchar(64) default null,
+//    to_server_value varchar(64) default null,
+//    req_count int(11) default null,
+//    req_per_sec float default null,
+//    hit_count int(11) default null,
+//    hit_per_sec float default null,
+//    timer_value float default null,
+//    timer_median float default null,
+//    index_value varchar(256) default null
+//  ) engine=pinba default charset=latin1 comment='tagN_report:group,operation,from_server,to_server';
+//
 //
 package gopinba

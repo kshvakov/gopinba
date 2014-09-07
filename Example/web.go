@@ -8,7 +8,20 @@ import (
 
 var pinba *gopinba.Pinba
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func simpleRequest(w http.ResponseWriter, r *http.Request) {
+
+	request := pinba.Request()
+
+	request.SetScriptName(r.URL.Path)
+
+	// exec
+
+	go pinba.Flush(request)
+
+	fmt.Fprintf(w, "simpleRequest %s", r.URL.Path)
+}
+
+func requestWithTimers(w http.ResponseWriter, r *http.Request) {
 
 	request := pinba.Request()
 
@@ -25,13 +38,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	go pinba.Flush(request)
 
-	fmt.Fprint(w, "handler")
+	fmt.Fprintf(w, "requestWithTimers %s", r.URL.Path)
 }
 
 func main() {
 
 	pinba = gopinba.New(&gopinba.Options{PinbaHost: "127.0.0.1", PinbaPort: 30002, ServerName: "go-web.local"})
 
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", simpleRequest)
+	http.HandleFunc("/timers/", requestWithTimers)
 	http.ListenAndServe(":8080", nil)
 }

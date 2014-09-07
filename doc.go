@@ -113,7 +113,7 @@
 //    http.ListenAndServe(":8080", nil)
 //  }
 //
-// Pinba reports tables
+// Pinba reports
 //
 //  create table report_by_group_operation (
 //    group_value varchar(64) default null,

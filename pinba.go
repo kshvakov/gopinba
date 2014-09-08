@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var memStats runtime.MemStats
+
 // Pinba access object
 type Pinba struct {
 	hostname   string
@@ -20,8 +22,6 @@ type Pinba struct {
 
 // New Pinba request object
 func (pinba *Pinba) Request() *request {
-
-	var memStats runtime.MemStats
 
 	runtime.ReadMemStats(&memStats)
 
@@ -42,8 +42,6 @@ func (pinba *Pinba) Flush(request *request) error {
 
 		return fmt.Errorf("Could not connect to pinba server")
 	}
-
-	var memStats runtime.MemStats
 
 	runtime.ReadMemStats(&memStats)
 

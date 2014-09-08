@@ -9,7 +9,7 @@
 //
 //  request := pinba.Request()
 //
-//  timer := request.TimerStart(&gopinba.Tag{
+//  timer := request.TimerStart(&gopinba.Tags{
 //      "group": "mysql",
 //      "operation": "connect",
 //      "from_server": "127.0.0.1",
@@ -20,7 +20,7 @@
 //
 //  request.TimerStop(timer)
 //
-//  timer = request.TimerStart(&gopinba.Tag{
+//  timer = request.TimerStart(&gopinba.Tags{
 //      "group": "mysql",
 //      "operation": "select",
 //      "from_server": "127.0.0.1",
@@ -31,7 +31,7 @@
 //
 //  request.TimerStop(timer)
 //
-//  timer = request.TimerStart(&gopinba.Tag{
+//  timer = request.TimerStart(&gopinba.Tags{
 //    "group": "cli",
 //    "operation": "fetch_data",
 //  })
@@ -68,7 +68,7 @@
 //
 //    request.SetScriptName(r.URL.Path)
 //
-//    timer := request.TimerStart(&gopinba.Tag{
+//    timer := request.TimerStart(&gopinba.Tags{
 //        "group": "mysql",
 //        "operation": "connect",
 //        "from_server": "127.0.0.1",
@@ -79,7 +79,7 @@
 //
 //    request.TimerStop(timer)
 //
-//    timer = request.TimerStart(&gopinba.Tag{
+//    timer = request.TimerStart(&gopinba.Tags{
 //        "group": "mysql",
 //        "operation": "select",
 //        "from_server": "127.0.0.1",
@@ -90,7 +90,7 @@
 //
 //    request.TimerStop(timer)
 //
-//    timer = request.TimerStart(&gopinba.Tag{
+//    timer = request.TimerStart(&gopinba.Tags{
 //        "group": "web",
 //        "operation": "fetch_data",
 //    })
